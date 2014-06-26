@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Pengu Wars" />
+		<Option execution_dir="C:/Users/Lenz/Desktop/Pengo Wars/Pengu Wars/" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Pengu Wars" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="C:/Users/Lenz/Desktop/Pengo Wars/files needed/bin" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Pengu Wars" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="C:/Users/Lenz/Desktop/Pengo Wars/files needed/bin" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add directory="C:/Users/Lenz/Desktop/Pengo Wars/files needed/include" />
+		</Compiler>
+		<Linker>
+			<Add library="glut32" />
+			<Add library="opengl32" />
+			<Add library="glu32" />
+			<Add library="winmm" />
+			<Add library="gdi32" />
+			<Add directory="C:/Users/Lenz/Desktop/Pengo Wars/files needed/lib" />
+		</Linker>
+		<Unit filename="extras/3DObject.cpp" />
+		<Unit filename="extras/Texture.cpp" />
+		<Unit filename="extras/bitmap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="extras/glm.cpp" />
+		<Unit filename="extras/glmimg.cpp" />
+		<Unit filename="extras/headers/3DObject.h" />
+		<Unit filename="extras/headers/Texture.h" />
+		<Unit filename="extras/headers/bitmap.h" />
+		<Unit filename="extras/headers/glm.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

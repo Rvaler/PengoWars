@@ -1,0 +1,200 @@
+# depslib dependency file v1.0
+1403705521 source:c:\users\lenz\desktop\pengo wars\src\main.cpp
+	<windows.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	"extras/headers/3DObject.h"
+	"extras/headers/Texture.h"
+	"extras/headers/bitmap.h"
+
+976684972 c:\users\lenz\desktop\pengo wars\files needed\include\gl\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1301111164 c:\users\lenz\desktop\pengo wars\files needed\include\gl\gl.h
+
+1301111164 c:\users\lenz\desktop\pengo wars\files needed\include\gl\glu.h
+	<stddef.h>
+	<GL/gl.h>
+
+1403345433 source:c:\users\lenz\desktop\pengo wars\src\extras\3dobject.cpp
+	"headers/3DObject.h"
+	<malloc.h>
+
+1403373382 source:c:\users\lenz\desktop\pengo wars\src\extras\glm.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"headers/glm.h"
+
+1398812018 c:\users\lenz\desktop\pengo wars\src\extras\headers\glm.h
+	<GLUT/glut.h>
+	<GL/gl.h>
+	<GL/glut.h>
+
+1400540070 source:c:\users\lenz\desktop\pengo wars\src\extras\glmimg.cpp
+	<string.h>
+	<math.h>
+	"headers/Texture.h"
+	<windows.h>
+	<GL/gl.h>
+	"headers/glm.h"
+
+1398812010 c:\users\lenz\desktop\pengo wars\src\extras\headers\texture.h
+	<windows.h>
+	<windowsx.h>
+	<stdlib.h>
+	<stdio.h>
+	<GL/glut.h>
+	<math.h>
+
+1400540075 source:c:\users\lenz\desktop\pengo wars\src\extras\texture.cpp
+	"headers/Texture.h"
+
+1399349091 c:\users\lenz\desktop\pengo wars\src\extras\headers\3dobject.h
+	<string.h>
+	"glm.h"
+
+1400543361 c:\users\lenz\desktop\pengo wars\src\headers\window.h
+
+1032715440 c:\users\lenz\desktop\pengo wars\src\extras\headers\bitmap.h
+	<GL/glut.h>
+	<windows.h>
+	<wingdi.h>
+
+1403297346 source:c:\users\lenz\desktop\pengo wars\src\extras\bitmap.c
+	"headers/bitmap.h"
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+
+1403345433 source:c:\users\rafa valer\dropbox\alister academy\5th semester\fundamentos de computação gráfica\pengo wars\src\extras\3dobject.cpp
+	"headers/3DObject.h"
+	<malloc.h>
+
+1399349091 c:\users\rafa valer\dropbox\alister academy\5th semester\fundamentos de computação gráfica\pengo wars\src\extras\headers\3dobject.h
+	<string.h>
+	"glm.h"
+
+1398812018 c:\users\rafa valer\dropbox\alister academy\5th semester\fundamentos de computação gráfica\pengo wars\src\extras\headers\glm.h
+	<GLUT/glut.h>
+	<GL/gl.h>
+	<GL/glut.h>
+
+1403297346 source:c:\users\rafa valer\dropbox\alister academy\5th semester\fundamentos de computação gráfica\pengo wars\src\extras\bitmap.c
+	"headers/bitmap.h"
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+
+1032715440 c:\users\rafa valer\dropbox\alister academy\5th semester\fundamentos de computação gráfica\pengo wars\src\extras\headers\bitmap.h
+	<GL/glut.h>
+	<windows.h>
+	<wingdi.h>
+
+1403373382 source:c:\users\rafa valer\dropbox\alister academy\5th semester\fundamentos de computação gráfica\pengo wars\src\extras\glm.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"headers/glm.h"
+
+1400540070 source:c:\users\rafa valer\dropbox\alister academy\5th semester\fundamentos de computação gráfica\pengo wars\src\extras\glmimg.cpp
+	<string.h>
+	<math.h>
+	"headers/Texture.h"
+	<windows.h>
+	<GL/gl.h>
+	"headers/glm.h"
+
+1398812010 c:\users\rafa valer\dropbox\alister academy\5th semester\fundamentos de computação gráfica\pengo wars\src\extras\headers\texture.h
+	<windows.h>
+	<windowsx.h>
+	<stdlib.h>
+	<stdio.h>
+	<GL/glut.h>
+	<math.h>
+
+1400540075 source:c:\users\rafa valer\dropbox\alister academy\5th semester\fundamentos de computação gráfica\pengo wars\src\extras\texture.cpp
+	"headers/Texture.h"
+
+1403706747 source:c:\users\rafa valer\dropbox\alister academy\5th semester\fundamentos de computação gráfica\pengo wars\src\main.cpp
+	<windows.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	"extras/headers/3DObject.h"
+	"extras/headers/Texture.h"
+	"extras/headers/bitmap.h"
+
+1403345433 source:c:\users\rafa valer\desktop\pengo wars\src\extras\3dobject.cpp
+	"headers/3DObject.h"
+	<malloc.h>
+
+1399349091 c:\users\rafa valer\desktop\pengo wars\src\extras\headers\3dobject.h
+	<string.h>
+	"glm.h"
+
+1398812018 c:\users\rafa valer\desktop\pengo wars\src\extras\headers\glm.h
+	<GLUT/glut.h>
+	<GL/gl.h>
+	<GL/glut.h>
+
+1403297346 source:c:\users\rafa valer\desktop\pengo wars\src\extras\bitmap.c
+	"headers/bitmap.h"
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+
+1032715440 c:\users\rafa valer\desktop\pengo wars\src\extras\headers\bitmap.h
+	<GL/glut.h>
+	<windows.h>
+	<wingdi.h>
+
+1403750392 source:c:\users\rafa valer\desktop\pengo wars\src\extras\glm.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"headers/glm.h"
+
+1400540070 source:c:\users\rafa valer\desktop\pengo wars\src\extras\glmimg.cpp
+	<string.h>
+	<math.h>
+	"headers/Texture.h"
+	<windows.h>
+	<GL/gl.h>
+	"headers/glm.h"
+
+1398812010 c:\users\rafa valer\desktop\pengo wars\src\extras\headers\texture.h
+	<windows.h>
+	<windowsx.h>
+	<stdlib.h>
+	<stdio.h>
+	<GL/glut.h>
+	<math.h>
+
+1400540075 source:c:\users\rafa valer\desktop\pengo wars\src\extras\texture.cpp
+	"headers/Texture.h"
+
+1403751661 source:c:\users\rafa valer\desktop\pengo wars\src\main.cpp
+	<windows.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	"extras/headers/3DObject.h"
+	"extras/headers/Texture.h"
+	"extras/headers/bitmap.h"
+
