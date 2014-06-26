@@ -679,7 +679,7 @@ void renderFromBMP() {
                 glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
                 glutWireCube(1.0f);
                 //solidBlock.Draw(SMOOTH_MATERIAL);
-                collisionMatrix[xAtMatrix][zAtMatrix] = SOLID_BLOCK;
+                //collisionMatrix[xAtMatrix][zAtMatrix] = SOLID_BLOCK;
                 break;
             case THROWABLE_BLOCK:
                 glScalef(1.0f, 2.0f, 1.0f);
@@ -688,7 +688,7 @@ void renderFromBMP() {
                 glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
                 glutWireCube(1.0f);
                 //throwableBlock.Draw(SMOOTH_MATERIAL);
-                collisionMatrix[xAtMatrix][zAtMatrix] = THROWABLE_BLOCK; ALISTERAQUI!
+                //collisionMatrix[xAtMatrix][zAtMatrix] = THROWABLE_BLOCK;
                 break;
             case PENGUIN:
                 glTranslatef(0.0f, 1.0f, 0.0f);
