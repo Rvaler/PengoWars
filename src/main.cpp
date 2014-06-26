@@ -39,6 +39,7 @@
 #define SMOOTH_MATERIAL 1
 #define SMOOTH_MATERIAL_TEXTURE 2
 
+
 //INITs
 void mainInit();
 void modelInit();
@@ -70,13 +71,15 @@ void jump();
 //RENDER FUNCTIONS
 void initTexture();
 void mainRender();
-void renderScene();
+void renderScene(bool updateCam);
+void renderMiniMap();
 void renderFloor();
 void renderFromBMP();
 void renderSkyBox();
 void updateCamera();
 void updateLight();
 void setTextureToOpengl();
+void renderPenguin();
 void testDraw();
 
 //MOUSE FUNCTIONS
@@ -88,7 +91,7 @@ void onMousePassiveMove(int x, int y);
 void updatePenguinState();
 
 //COLLISION FUNCTIONS
-COLLISION_ENUM collidesAt(Point3d* coordinate);
+bool collidesAt(Point3d* coordinate);
 
 //ENEMIES FUNCTIONS
 void updateEnemies();
@@ -113,7 +116,7 @@ Window* mainWindow = (Window*) (malloc(sizeof(Window)));
 Mouse* mouse = (Mouse*) (malloc(sizeof(Mouse)));
 
 //POINT3D COORDINATES GLOBALS
-Point3d* cameraPosition = (Point3d*) (malloc(sizeof(Point3d)));
+Point3d* penguinPosition = (Point3d*) (malloc(sizeof(Point3d)));
 Point3d* centerPosition = (Point3d*) (malloc(sizeof(Point3d)));
 Point3d* upVector = (Point3d*) (malloc(sizeof(Point3d)));
 Point3d* enemy = (Point3d*) (malloc(sizeof(Point3d)));
@@ -124,7 +127,7 @@ int sceneHeight, sceneWidth;
 C3DObject enemyObject, solidBlock, throwableBlock, penguin;
 
 //COLLISION GLOBALS
-OBJ_ENUM collisionMatrix[MAP_WIDTH][MAP_LENGTH] = {NOTHING};
+OBJ_ENUM collisionMatrix[MAP_WIDTH*2][MAP_LENGTH*2] = {NOTHING};
 
 //MOVEMENT GLOBALS
 bool walkingForward = false;
@@ -216,9 +219,9 @@ void modelInit() {
 }
 
 void cameraInit() {
-    cameraPosition->x = 0.0f;
-    cameraPosition->y = DEFAULT_CAMERA_HEIGHT;
-    cameraPosition->z = 0.0f;
+    penguinPosition->x = 0.0f;
+    penguinPosition->y = DEFAULT_CAMERA_HEIGHT;
+    penguinPosition->z = 0.0f;
 }
 
 void centerInit() {
@@ -252,7 +255,7 @@ void lightInit() {
     GLfloat light1_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 	GLfloat light1_diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
 	GLfloat light1_specular[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	GLfloat light1_position[] = {cameraPosition->x, cameraPosition->y, cameraPosition->z, 1.0f };
+	GLfloat light1_position[] = {cameraPosition->x, penguinPosition->y, cameraPosition->z, 1.0f };
 
 	glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
@@ -391,6 +394,7 @@ void setWindow() {
 
 //KEYBOARD FUNCTIONS IMPLEMENTATION
 void onKeyDown(unsigned char key, int x, int y) {
+
     switch(key) {
         case 'w':
             walkingForward = true;
@@ -459,21 +463,21 @@ void walkForward() {
     GLfloat movementSpeed = WALK_SPEED;
     if(isRunning) movementSpeed = RUNNING_SPEED;
 
-    GLfloat deltaX = centerPosition->x - cameraPosition->x;
-    GLfloat deltaZ = centerPosition->z - cameraPosition->z;
+    GLfloat deltaX = centerPosition->x - penguinPosition->x;
+    GLfloat deltaZ = centerPosition->z - penguinPosition->z;
 
-    GLfloat oldPositionX = cameraPosition->x;
-    GLfloat oldPositionZ = cameraPosition->z;
+    GLfloat oldPositionX = penguinPosition->x;
+    GLfloat oldPositionZ = penguinPosition->z;
 
-    cameraPosition->x = cameraPosition->x + (deltaX * movementSpeed);
-    cameraPosition->z = cameraPosition->z + (deltaZ * movementSpeed);
+    penguinPosition->x = penguinPosition->x + (deltaX * movementSpeed);
+    penguinPosition->z = penguinPosition->z + (deltaZ * movementSpeed);
 
 
-    if(cameraPosition->x < -MAP_WIDTH || cameraPosition->x > MAP_WIDTH) {
-        cameraPosition->x = oldPositionX;
+    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH) {
+        penguinPosition->x = oldPositionX;
     }
-    if(cameraPosition->z < -MAP_LENGTH || cameraPosition->z > MAP_LENGTH) {
-        cameraPosition->z = oldPositionZ;
+    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH) {
+        penguinPosition->z = oldPositionZ;
     }
 }
 
@@ -481,20 +485,20 @@ void walkBackward() {
     GLfloat movementSpeed = WALK_SPEED;
     if(isRunning) movementSpeed = RUNNING_SPEED;
 
-    GLfloat deltaX = centerPosition->x - cameraPosition->x;
-    GLfloat deltaZ = centerPosition->z - cameraPosition->z;
+    GLfloat deltaX = centerPosition->x - penguinPosition->x;
+    GLfloat deltaZ = centerPosition->z - penguinPosition->z;
 
-    GLfloat oldPositionX = cameraPosition->x;
-    GLfloat oldPositionZ = cameraPosition->z;
+    GLfloat oldPositionX = penguinPosition->x;
+    GLfloat oldPositionZ = penguinPosition->z;
 
-    cameraPosition->x = cameraPosition->x - (deltaX * movementSpeed);
-    cameraPosition->z = cameraPosition->z - (deltaZ * movementSpeed);
+    penguinPosition->x = penguinPosition->x - (deltaX * movementSpeed);
+    penguinPosition->z = penguinPosition->z - (deltaZ * movementSpeed);
 
-    if(cameraPosition->x < -MAP_WIDTH || cameraPosition->x > MAP_WIDTH) {
-        cameraPosition->x = oldPositionX;
+    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH) {
+        penguinPosition->x = oldPositionX;
     }
-    if(cameraPosition->z < -MAP_LENGTH || cameraPosition->z > MAP_LENGTH) {
-        cameraPosition->z = oldPositionZ;
+    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH) {
+        penguinPosition->z = oldPositionZ;
     }
 }
 
@@ -502,20 +506,20 @@ void walkLeft() {
     GLfloat movementSpeed = WALK_SPEED;
     if(isRunning) movementSpeed = RUNNING_SPEED;
 
-    GLfloat oldPositionX = cameraPosition->x;
-    GLfloat oldPositionZ = cameraPosition->z;
+    GLfloat oldPositionX = penguinPosition->x;
+    GLfloat oldPositionZ = penguinPosition->z;
 
-    GLfloat deltaX = centerPosition->x - cameraPosition->x;
-    GLfloat deltaZ = centerPosition->z - cameraPosition->z;
+    GLfloat deltaX = centerPosition->x - penguinPosition->x;
+    GLfloat deltaZ = centerPosition->z - penguinPosition->z;
 
-    cameraPosition->x = cameraPosition->x + (deltaZ * movementSpeed);
-    cameraPosition->z = cameraPosition->z - (deltaX * movementSpeed);
+    penguinPosition->x = penguinPosition->x + (deltaZ * movementSpeed);
+    penguinPosition->z = penguinPosition->z - (deltaX * movementSpeed);
 
-    if(cameraPosition->x < -MAP_WIDTH || cameraPosition->x > MAP_WIDTH) {
-        cameraPosition->x = oldPositionX;
+    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH) {
+        penguinPosition->x = oldPositionX;
     }
-    if(cameraPosition->z < -MAP_LENGTH || cameraPosition->z > MAP_LENGTH) {
-        cameraPosition->z = oldPositionZ;
+    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH) {
+        penguinPosition->z = oldPositionZ;
     }
 }
 
@@ -523,26 +527,26 @@ void walkRight() {
     GLfloat movementSpeed = WALK_SPEED;
     if(isRunning) movementSpeed = RUNNING_SPEED;
 
-    GLfloat oldPositionX = cameraPosition->x;
-    GLfloat oldPositionZ = cameraPosition->z;
+    GLfloat oldPositionX = penguinPosition->x;
+    GLfloat oldPositionZ = penguinPosition->z;
 
-    GLfloat deltaX = centerPosition->x - cameraPosition->x;
-    GLfloat deltaZ = centerPosition->z - cameraPosition->z;
+    GLfloat deltaX = centerPosition->x - penguinPosition->x;
+    GLfloat deltaZ = centerPosition->z - penguinPosition->z;
 
-    cameraPosition->x = cameraPosition->x - (deltaZ * movementSpeed);
-    cameraPosition->z = cameraPosition->z + (deltaX * movementSpeed);
+    penguinPosition->x = penguinPosition->x - (deltaZ * movementSpeed);
+    penguinPosition->z = penguinPosition->z + (deltaX * movementSpeed);
 
-    if(cameraPosition->x < -MAP_WIDTH || cameraPosition->x > MAP_WIDTH) {
-        cameraPosition->x = oldPositionX;
+    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH) {
+        penguinPosition->x = oldPositionX;
     }
-    if(cameraPosition->z < -MAP_LENGTH || cameraPosition->z > MAP_LENGTH) {
-        cameraPosition->z = oldPositionZ;
+    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH) {
+        penguinPosition->z = oldPositionZ;
     }
 }
 
 void jump() {
     if(jump_period < 1.0f) {
-        cameraPosition->y = DEFAULT_CAMERA_HEIGHT + (sin(jump_period * M_PI));
+        penguinPosition->y = DEFAULT_CAMERA_HEIGHT + (sin(jump_period * M_PI));
         jump_period += JUMP_SPEED;
     }
     else {
@@ -554,14 +558,19 @@ void jump() {
 //RENDER FUNCTIONS IMPLEMENTATION
 void mainRender() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	renderScene();
+	renderScene(false);
+
+    glClear(GL_DEPTH_BUFFER_BIT);
+	renderScene(true);
+
 	glFlush();
 	glutPostRedisplay();
-	Sleep(30);
+    Sleep(30);
 }
 
-void renderScene() {
-	//printf("x: %f \t y:%f \t z:%f\n", cameraPosition->x, cameraPosition->y, cameraPosition->z);
+void renderScene(bool isMiniMap) {
+    if(isMiniMap) glViewport(mainWindow->width/50, mainWindow->height/50, mainWindow->width/4, mainWindow->height/4);
+    else glViewport(0, 0, mainWindow->width, mainWindow->height);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -570,7 +579,11 @@ void renderScene() {
     glEnable(GL_TEXTURE_2D);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-    updateCamera();
+    if(isMiniMap)
+    gluLookAt(0.0f, 20.0f, 0.0f,
+              0.0f, 0.1f, 0.1f,
+              0.0f, 1.0f, 0.0f);
+    else updateCamera();
 
     setTextureToOpengl();
 
@@ -580,14 +593,13 @@ void renderScene() {
     //updatePenguinState();
     updateLight();
 
-
-
     //testDraw();
     updateEnemies();
 
-    //if (!collidesAt(cameraPosition))
-        updatePenguinState();
+    updatePenguinState();
+    renderPenguin();
 }
+
 
 void renderFloor(){
     glBindTexture(type, texture);
@@ -678,8 +690,7 @@ void renderFromBMP() {
                 glutSolidCube(1.0f);
                 glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
                 glutWireCube(1.0f);
-                //solidBlock.Draw(SMOOTH_MATERIAL);
-                //collisionMatrix[xAtMatrix][zAtMatrix] = SOLID_BLOCK;
+                collisionMatrix[xAtMatrix][zAtMatrix] = SOLID_BLOCK;
                 break;
             case THROWABLE_BLOCK:
                 glScalef(1.0f, 2.0f, 1.0f);
@@ -687,8 +698,7 @@ void renderFromBMP() {
                 glutSolidCube(1.0f);
                 glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
                 glutWireCube(1.0f);
-                //throwableBlock.Draw(SMOOTH_MATERIAL);
-                //collisionMatrix[xAtMatrix][zAtMatrix] = THROWABLE_BLOCK;
+                collisionMatrix[xAtMatrix][zAtMatrix] = THROWABLE_BLOCK;
                 break;
             case PENGUIN:
                 glTranslatef(0.0f, 1.0f, 0.0f);
@@ -707,13 +717,13 @@ void renderFromBMP() {
 }
 
 void renderSkyBox() {
-
     glBindTexture(type, texture);
-    glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
+    //glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
     glEnable(GL_COLOR_MATERIAL);
-    glColor3f(0.6f, 0.6f, 1.0f);
+    glColor3f(0.8f, 0.8f, 1.0f);
 
     glDisable(GL_CULL_FACE);
+
     glPushMatrix();
         glBegin(GL_QUADS);
             //LEFT SIDE
@@ -757,31 +767,28 @@ void renderSkyBox() {
             glVertex3f(-MAP_WIDTH,MAP_HEIGHT,-MAP_LENGTH);
 
             //TOP
-            glTexCoord2f(1.0f, 0.0f);
             glNormal3f(0.0f, -1.0f, 0.0f);
             glVertex3f(-MAP_WIDTH, MAP_HEIGHT, MAP_LENGTH);
-            glTexCoord2f(0.0f, 0.0f);
             glNormal3f(0.0f, -1.0f, 0.0f);
             glVertex3f(MAP_WIDTH, MAP_HEIGHT, MAP_LENGTH);
-            glTexCoord2f(0.0f, 1.0f);
             glNormal3f(0.0f, -1.0f, 0.0f);
             glVertex3f(MAP_WIDTH, MAP_HEIGHT, -MAP_LENGTH);
-            glTexCoord2f(1.0f, 1.0f);
             glNormal3f(0.0f, -1.0f, 0.0f);
             glVertex3f(-MAP_WIDTH, MAP_HEIGHT, -MAP_LENGTH);
         glEnd();
     glPopMatrix();
+
 }
 
 void updateCamera() {
 
-    centerPosition->y = cameraPosition->y + mouse->y;
-    centerPosition->x = cameraPosition->x - sin(mouse->x * M_PI * 1.2f);
-    centerPosition->z = cameraPosition->z + cos(mouse->x * M_PI * 1.2f);
+    centerPosition->y = penguinPosition->y + mouse->y;
+    centerPosition->x = penguinPosition->x - sin(mouse->x * M_PI * 1.2f);
+    centerPosition->z = penguinPosition->z + cos(mouse->x * M_PI * 1.2f);
 
     //printf("x: %f \t z: %f \n",centerPosition->x, centerPosition->z);
 
-    gluLookAt(cameraPosition->x, cameraPosition->y, cameraPosition->z,
+    gluLookAt(penguinPosition->x, penguinPosition->y, penguinPosition->z,
               centerPosition->x, centerPosition->y, centerPosition->z,
               upVector->x, upVector->y, upVector->z);
 }
@@ -805,6 +812,13 @@ void setTextureToOpengl()
 
     glTexImage2D(type, 0, 4, info->bmiHeader.biWidth, info->bmiHeader.biHeight,
                   0, GL_RGBA, GL_UNSIGNED_BYTE, rgba );
+}
+
+void renderPenguin() {
+    glPushMatrix();
+    glTranslatef(penguinPosition->x, penguinPosition->y - 0.2f, penguinPosition->z);
+    penguin.Draw(SMOOTH_MATERIAL_TEXTURE);
+    glPopMatrix();
 }
 
 void testDraw() {
@@ -872,21 +886,18 @@ void updatePenguinState(){
     else if(walkingRight) walkRight();
 
     if(isJumping) jump();
-    collidesAt(cameraPosition);
 }
 
 
-COLLISION_ENUM collidesAt(Point3d* coordinate) {
-    GLint xAtCollisionMatrix = MAP_WIDTH - (int) coordinate->x;
-    GLint zAtCollisionMatrix = MAP_LENGTH - (int) coordinate->z;
+bool collidesAt(Point3d* coordinate) {
+    GLint x = MAP_WIDTH - (int) coordinate->x;
+    GLint z = MAP_LENGTH - (int) coordinate->z;
 
-    bool isColliding = collisionMatrix[xAtCollisionMatrix][zAtCollisionMatrix];
+    bool isColliding = collisionMatrix[x][z];
 
     //printf("x:%i \t z: %i\n", (int)cameraPosition->x, (int)cameraPosition->z);
     //printf("x: %i \t z: %i hit: %i\n\n",xAtCollisionMatrix, zAtCollisionMatrix, isColliding);
 
-    if(collisionMatrix[xAtCollisionMatrix][zAtCollisionMatrix] == SOLID_BLOCK) printf("SOLID\n");
-    else printf("\n");
 }
 
 void updateEnemies() {
@@ -909,8 +920,8 @@ void updateEnemies() {
 
 }
 void enemyWalk(Point3d* enemyPosition) {
-    GLfloat deltaX = cameraPosition->x - enemyPosition->x;
-    GLfloat deltaZ = cameraPosition->z - enemyPosition->z;
+    GLfloat deltaX = penguinPosition->x - enemyPosition->x;
+    GLfloat deltaZ = penguinPosition->z - enemyPosition->z;
     GLfloat distance = sqrt( pow(deltaX, 2) + pow(deltaZ, 2) );
 
 
