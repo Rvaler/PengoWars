@@ -1784,7 +1784,6 @@ GLvoid glmDraw(GLMmodel* model, GLuint mode,char *drawonly)
         }
 
         glBegin(GL_TRIANGLES);
-        printf("Draw\n");
         for (i = 0; i < group->numtriangles; i++) {
             triangle = &T(group->triangles[i]);
 #ifdef DebugVisibleSurfaces

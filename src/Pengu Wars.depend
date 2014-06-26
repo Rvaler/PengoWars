@@ -198,3 +198,68 @@
 	"extras/headers/Texture.h"
 	"extras/headers/bitmap.h"
 
+1403754127 source:c:\users\lenz\desktop\github workspace\pengowars\src\extras\3dobject.cpp
+	"headers/3DObject.h"
+	<malloc.h>
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\src\extras\headers\3dobject.h
+	<string.h>
+	"glm.h"
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\src\extras\headers\glm.h
+	<GLUT/glut.h>
+	<GL/gl.h>
+	<GL/glut.h>
+
+1403754127 source:c:\users\lenz\desktop\github workspace\pengowars\src\extras\bitmap.c
+	"headers/bitmap.h"
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\src\extras\headers\bitmap.h
+	<GL/glut.h>
+	<windows.h>
+	<wingdi.h>
+
+1403806680 source:c:\users\lenz\desktop\github workspace\pengowars\src\extras\glm.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"headers/glm.h"
+
+1403754127 source:c:\users\lenz\desktop\github workspace\pengowars\src\extras\glmimg.cpp
+	<string.h>
+	<math.h>
+	"headers/Texture.h"
+	<windows.h>
+	<GL/gl.h>
+	"headers/glm.h"
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\src\extras\headers\texture.h
+	<windows.h>
+	<windowsx.h>
+	<stdlib.h>
+	<stdio.h>
+	<GL/glut.h>
+	<math.h>
+
+1403754127 source:c:\users\lenz\desktop\github workspace\pengowars\src\extras\texture.cpp
+	"headers/Texture.h"
+
+1403810967 source:c:\users\lenz\desktop\github workspace\pengowars\src\main.cpp
+	<windows.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	"extras/headers/3DObject.h"
+	"extras/headers/Texture.h"
+	"extras/headers/bitmap.h"
+	"extras/headers/structures.h"
+
+1403809647 c:\users\lenz\desktop\github workspace\pengowars\src\extras\headers\structures.h
+
