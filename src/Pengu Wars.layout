@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="..\files needed\include\al\alut.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="..\files needed\include\al\al.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4824" topLine="102" />
-		</Cursor>
-	</File>
-	<File name="extras\headers\structures.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="334" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="extras\headers\glm.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1184" topLine="35" />
+			<Cursor1 position="1361" topLine="73" />
 		</Cursor>
 	</File>
 	<File name="extras\headers\3DObject.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -26,14 +16,9 @@
 			<Cursor1 position="155" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="extras\glm.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="..\files needed\include\al\alut.h" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="64061" topLine="1789" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3432" topLine="125" />
+			<Cursor1 position="192" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="extras\bitmap.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -41,9 +26,9 @@
 			<Cursor1 position="105" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="extras\Texture.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="extras\glm.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="134" topLine="0" />
+			<Cursor1 position="64061" topLine="1789" />
 		</Cursor>
 	</File>
 	<File name="extras\3DObject.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -51,9 +36,24 @@
 			<Cursor1 position="2187" topLine="74" />
 		</Cursor>
 	</File>
-	<File name="..\files needed\include\al\al.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="extras\headers\structures.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1361" topLine="73" />
+			<Cursor1 position="334" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="extras\Texture.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="134" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13985" topLine="519" />
+		</Cursor>
+	</File>
+	<File name="extras\headers\glm.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1184" topLine="35" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
