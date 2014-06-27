@@ -79,7 +79,7 @@ void mainRender();
 void renderScene(bool updateCam);
 void renderMiniMap();
 void renderFloor();
-void renderFromBMP();
+void renderFromSceneMatrix();
 void renderSkyBox();
 void updateCamera();
 void updateLight();
@@ -608,7 +608,7 @@ void renderScene(bool isMiniMap) {
 
     setTextureToOpengl();
     renderFloor();
-    renderFromBMP();
+    renderFromSceneMatrix();
     //renderSkyBox();
 
     //testDraw();
@@ -677,7 +677,7 @@ void renderFloor(){
     glPopMatrix();
     */
 }
-void renderFromBMP() {
+void renderFromSceneMatrix() {
 
     glEnable(GL_COLOR_MATERIAL);
 
@@ -946,19 +946,28 @@ void throwBlock() {
     } else
 
     //penguin is looking to positive Z: front
-    if(deltaZ >= 0.5) {
+    if(deltaZ >= 0.5 && collisionMatrix[x][z-1] == THROWABLE_BLOCK) {
+            GLint oldZ = z - 1;
+            GLint newZ = oldZ - 1;
+
+            collisionMatrix[x][oldZ] = NOTHING;
+            collisionMatrix[x][newZ] = THROWABLE_BLOCK;
+
+            printf("sM Old %i \t", sceneMatrix[x * sceneWidth + oldZ]);
+            printf("sM New %i\n", sceneMatrix[x * sceneWidth + newZ] = THROWABLE_BLOCK);
     }
     else
     //penguin is looking to negative Z: behind
-    if(deltaZ <= -0.5) {
+    if(deltaZ <= -0.5 && collisionMatrix[x][z+1] == THROWABLE_BLOCK) {
     }
     else
     //penguin is looking to positive X: left
-    if(deltaX >= 0.5) {
+    if(deltaX >= 0.5 && collisionMatrix[x-1][z] == THROWABLE_BLOCK) {
+        printf("LEFT\n");
     }
     else
     ////penguin is looking to negative X: right
-    if(deltaX <= -0.5) ;
+    if(deltaX <= -0.5 && collisionMatrix[x+1][z-1] == THROWABLE_BLOCK) ;
 }
 
 
