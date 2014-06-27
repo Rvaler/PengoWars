@@ -847,18 +847,18 @@ void setTextureToOpengl()
 }
 
 void renderPenguin() {
-    GLfloat angle = -(mouse->x);
-   // GLfloat angle = -( (asin (sin(mouse->x * M_PI * 1.2f))) * 180/M_PI );
 
-   /* GLfloat xTranslate = (penguinPosition->x * cos(angle)) - (penguinPosition->z * sin(angle));
+    GLfloat angle = -( (asin (sin(mouse->x * M_PI * 1.2f))) * 180/M_PI );
+    //printf("Angle: %f\n", angle);
+    GLfloat xTranslate = (penguinPosition->x * cos(angle)) - (penguinPosition->z * sin(angle));
     GLfloat zTranslate = (penguinPosition->z * cos(angle)) - (penguinPosition->z * sin(angle));
-    */
+
     //printf("xt: %f \t zt: %f\n",xTranslate,zTranslate);
-    printf("%.2f\n", mouse->x);
+
     glPushMatrix();
         glTranslatef(0.0f, 1.0f, 0.0f);
+        //glRotatef(angle, 0.0f, 1.0f, 0.0f);
         glTranslatef(penguinPosition->x, penguinPosition->y - 1.5f, penguinPosition->z);
-        glRotatef(angle * 180, 0.0f, 1.0f, 0.0f);
         penguin.Draw(SMOOTH_MATERIAL_TEXTURE);
     glPopMatrix();
 
