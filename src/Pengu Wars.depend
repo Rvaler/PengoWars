@@ -249,7 +249,7 @@
 1403754127 source:c:\users\lenz\desktop\github workspace\pengowars\src\extras\texture.cpp
 	"headers/Texture.h"
 
-1403834215 source:c:\users\lenz\desktop\github workspace\pengowars\src\main.cpp
+1403890461 source:c:\users\lenz\desktop\github workspace\pengowars\src\main.cpp
 	<windows.h>
 	<GLUT/glut.h>
 	<GL/glut.h>
@@ -260,6 +260,82 @@
 	"extras/headers/Texture.h"
 	"extras/headers/bitmap.h"
 	"extras/headers/structures.h"
+	"../files needed/include/al/al.h"
+	"../files needed/include/al/alc.h"
+	"../files needed/include/al/alut.h"
 
 1403816208 c:\users\lenz\desktop\github workspace\pengowars\src\extras\headers\structures.h
+
+1403887356 source:c:\users\lenz\desktop\github workspace\pengowars\src\extras\sound.cpp
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	"../../files-needed/include/al/al.h"
+	"../../files-needed/include/al/alc.h"
+	"../../files-needed/include/al/alut.h"
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\files-needed\include\al\al.h
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\files-needed\include\al\alc.h
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\files-needed\include\al\alut.h
+	<al/alc.h>
+	<al/al.h>
+	<OpenAL/alc.h>
+	<OpenAL/al.h>
+	<AL/al.h>
+	<AL/alc.h>
+
+1176501768 c:\users\lenz\desktop\pengo wars\files needed\include\al\alc.h
+
+1165613458 c:\users\lenz\desktop\pengo wars\files needed\include\al\al.h
+
+1403887356 c:\users\lenz\desktop\github workspace\pengowars\src\extras\sound.cpp
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	"../../files-needed/include/al/al.h"
+	"../../files-needed/include/al/alc.h"
+	"../../files-needed/include/al/alut.h"
+
+1403754127 source:c:\users\lenz\desktop\github workspace\pengowars\files-needed\include\gl\glm.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"glm.h"
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\files-needed\include\gl\glm.h
+	<GLUT/glut.h>
+	<GL/gl.h>
+	<GL/glut.h>
+
+1403754127 source:c:\users\lenz\desktop\github workspace\pengowars\files-needed\include\gl\glmimg.cpp
+	<string.h>
+	<math.h>
+	"Texture.h"
+	<windows.h>
+	<GL/gl.h>
+	"glm.h"
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\files-needed\include\gl\texture.h
+	<windows.h>
+	<windowsx.h>
+	<stdlib.h>
+	<stdio.h>
+	<GL/glut.h>
+	<math.h>
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\files needed\include\al\al.h
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\files needed\include\al\alc.h
+
+1403754127 c:\users\lenz\desktop\github workspace\pengowars\files needed\include\al\alut.h
+	<al/alc.h>
+	<al/al.h>
+	<OpenAL/alc.h>
+	<OpenAL/al.h>
+	<AL/al.h>
+	<AL/alc.h>
 

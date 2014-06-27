@@ -16,6 +16,11 @@
 //#include "extras/headers/glm.h"
 #include "extras/headers/structures.h"
 
+#include "../files needed/include/al/al.h"
+#include "../files needed/include/al/alc.h"
+#include "../files needed/include/al/alut.h"
+
+
 #define DEFAULT_CAMERA_HEIGHT 1.5f
 
 #define DEFAULT_WIDTH 900
@@ -38,6 +43,11 @@
 #define SMOOTH 0
 #define SMOOTH_MATERIAL 1
 #define SMOOTH_MATERIAL_TEXTURE 2
+
+// sound stuff
+#define NUM_BUFFERS 1
+#define NUM_SOURCES 1
+#define NUM_ENVIRONMENTS 1
 
 
 //INITs
@@ -98,6 +108,10 @@ bool collidesAt(Point3d* coordinate);
 void updateEnemies();
 void enemyWalk(Point3d* enemyPosition);
 
+//SOUND FUNCTIONS
+void soundInit();
+void playSound();
+
 // parte de código extraído de "texture.c" por Michael Sweet (OpenGL SuperBible)
 // texture buffers and stuff
 int i;                       /* Looping var */
@@ -146,6 +160,14 @@ const float ENEMY_SPEED = 0.02; // range must be > 0
 const float JUMP_SPEED = 0.04f; //range must be > 0
 GLfloat jump_period = 0.0f;
 
+//SOUND STUFF
+// buffers for openal stuff
+ALuint  buffer[NUM_BUFFERS];
+ALuint  source[NUM_SOURCES];
+ALuint  environment[NUM_ENVIRONMENTS];
+ALsizei size,freq;
+ALenum  format;
+ALvoid  *data;
 
 int main(int argc, char *argv[])
 {
@@ -159,7 +181,6 @@ int main(int argc, char *argv[])
     glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE | GLUT_DEPTH);
 
     mainWindow->id = glutCreateWindow("Pengo WARS");
-
 
 
     glutDisplayFunc(mainRender);
@@ -204,6 +225,7 @@ void mainInit() {
     centerInit();
     upVectorInit();
     textureInit();
+    soundInit();
 
 }
 
@@ -691,20 +713,24 @@ void renderFromBMP() {
                 glEnable(GL_COLOR_MATERIAL);
                 break;
             case SOLID_BLOCK:
+                glDisable(GL_CULL_FACE);
                 glScalef(1.0f, 4.0f, 1.0f);
                 glColor4f(0.6f, 0.6f, 1.0f, 1.0f);
                 glutSolidCube(1.0f);
                 glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
                 glutWireCube(1.0f);
                 collisionMatrix[xAtMatrix][zAtMatrix] = SOLID_BLOCK;
+                glEnable(GL_CULL_FACE);
                 break;
             case THROWABLE_BLOCK:
+                glDisable(GL_CULL_FACE);
                 glScalef(1.0f, 2.0f, 1.0f);
                 glColor4f(0.6f, 1.0f, 0.6f, 1.0f);
                 glutSolidCube(1.0f);
                 glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
                 glutWireCube(1.0f);
                 collisionMatrix[xAtMatrix][zAtMatrix] = THROWABLE_BLOCK;
+                glEnable(GL_CULL_FACE);
                 break;
             case PENGUIN:
                 glTranslatef(0.0f, 1.0f, 0.0f);
@@ -995,4 +1021,67 @@ void enemyWalk(Point3d* enemyPosition) {
             }
     }
     //else printf("\n");
+}
+
+/**
+Initialize openal and check for errors
+*/
+void soundInit() {
+
+	printf("Initializing OpenAl \n");
+
+	// Init openAL
+	alutInit(0, NULL);
+
+	alGetError(); // clear any error messages
+
+    // Generate buffers, or else no sound will happen!
+    alGenBuffers(NUM_BUFFERS, buffer);
+
+    if (alGetError() != AL_NO_ERROR)
+    {
+        printf("- Error creating buffers !!\n");
+        exit(1);
+    }
+    else
+    {
+        printf("init() - No errors yet.\n");
+    }
+
+	alutLoadWAVFile("../res/audio/popcorn.wav",&format,&data,&size,&freq,false);
+    alBufferData(buffer[0],format,data,size,freq);
+    //alutUnloadWAV(format,data,size,freq);
+
+	alGetError(); /* clear error */
+    alGenSources(NUM_SOURCES, source);
+
+    if (alGetError() != AL_NO_ERROR)
+    {
+        printf("- Error creating sources !!\n");
+        exit(2);
+    }
+    else
+    {
+        printf("init - no errors after alGenSources\n");
+    }
+
+    ALfloat listenerPos[] = {penguinPosition->x, penguinPosition->y, penguinPosition->z};
+    ALfloat sourcePos[] = {penguinPosition->x, penguinPosition->y, penguinPosition->z};
+    ALfloat vel[] = {0.0f, 0.0f, 0.0f};
+
+	alListenerfv(AL_POSITION,listenerPos);
+    alListenerfv(AL_VELOCITY,vel);
+	alSourcef(source[0], AL_PITCH, 1.0f);
+    alSourcef(source[0], AL_GAIN, 1.0f);
+    alSourcefv(source[0], AL_POSITION, sourcePos);
+     alSourcefv(source[0], AL_VELOCITY, vel);
+    alSourcei(source[0], AL_BUFFER,buffer[0]);
+    alSourcei(source[0], AL_LOOPING, AL_TRUE);
+
+	printf("Sound ok! \n\n");
+
+	alSourcei(source[0],AL_LOOPING,AL_TRUE);
+
+    //play
+    alSourcePlay(source[0]);
 }

@@ -23,7 +23,7 @@
 #include <stdio.h>
 
 #include "glm.h"
-#include "vector3f.h"
+//#include "vector3f.h"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
