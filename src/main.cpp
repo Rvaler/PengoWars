@@ -137,6 +137,7 @@ Point3d* enemy = (Point3d*) (malloc(sizeof(Point3d)));
 OBJ_ENUM *sceneMatrix;
 int sceneHeight, sceneWidth;
 C3DObject enemyObject, solidBlock, throwableBlock, penguin;
+bool isBlockMoving = false;
 
 //COLLISION GLOBALS
 OBJ_ENUM collisionMatrix[MAP_WIDTH*2][MAP_LENGTH*2] = {NOTHING};
@@ -939,6 +940,10 @@ void throwBlock() {
     GLint z = MAP_LENGTH - (int) penguinPosition->z;
 
     //printf("dx: %f \t dz: %f\n", deltaX, deltaZ);
+
+    if(isBlockMoving) {
+
+    } else
 
     //penguin is looking to positive Z: front
     if(deltaZ >= 0.5) {
