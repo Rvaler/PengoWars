@@ -239,30 +239,20 @@ void upVectorInit() {
 void lightInit() {
     glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	//glEnable(GL_LIGHT1);
 
-	GLfloat light0_ambient[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+	GLfloat light0_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 	GLfloat light0_diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
 	GLfloat light0_specular[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	GLfloat light0_position[] = {0.0f, 15.0f, 0.0f, 1.0f };
+	GLfloat light0_position[] = {0.0f, 0.0f, 0.0f, 1.0f };
 
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glTranslatef(0.0f, 15.0f, 0.0f);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light0_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
 	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
-
-/*
-    GLfloat light1_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	GLfloat light1_diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-	GLfloat light1_specular[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	GLfloat light1_position[] = {cameraPosition->x, penguinPosition->y, cameraPosition->z, 1.0f };
-
-	glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
-	glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
-*/
-
+    glPopMatrix();
 }
 
 /**
@@ -579,25 +569,24 @@ void renderScene(bool isMiniMap) {
     glEnable(GL_TEXTURE_2D);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
+    updateLight();
+
     if(isMiniMap)
-    gluLookAt(0.0f, 20.0f, 0.0f,
+    gluLookAt(0.0f, 50.0f, 0.0f,
               0.0f, 0.1f, 0.1f,
               0.0f, 1.0f, 0.0f);
     else updateCamera();
 
-    setTextureToOpengl();
+    renderPenguin();
 
+    setTextureToOpengl();
     renderFloor();
     renderFromBMP();
     //renderSkyBox();
-    //updatePenguinState();
-    updateLight();
 
     //testDraw();
     updateEnemies();
-
     updatePenguinState();
-    renderPenguin();
 }
 
 
@@ -794,8 +783,12 @@ void updateCamera() {
 }
 
 void updateLight() {
-    GLfloat light_position[] = {15.0f, 20.0f, 0.0f, 1.0f };
-    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glTranslatef(0.0f, 25.0f, 0.0f);
+	GLfloat light0_position[] = {0.0f, 0.0f, 0.0f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
+    glPopMatrix();
 }
 
 void setTextureToOpengl()
