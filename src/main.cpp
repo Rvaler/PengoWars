@@ -364,9 +364,9 @@ void fogInit() {
 }
 
 void enemyInit() {
-    enemy->x = 20.0f;
+    enemy->x = 10.0f;
     enemy->y = 0.0f;
-    enemy->z = 20.0f;
+    enemy->z = 10.0f;
 }
 
 //WINDOW FUNCTIONS IMPLEMENTATION
@@ -835,13 +835,16 @@ void setTextureToOpengl()
 void renderPenguin() {
 
     GLfloat angle = -( (asin (sin(mouse->x * M_PI * 1.2f))) * 180/M_PI );
+    //printf("Angle: %f\n", angle);
     GLfloat xTranslate = (penguinPosition->x * cos(angle)) - (penguinPosition->z * sin(angle));
-    GLfloat zTranslate = (penguinPosition->x * sin(angle)) - (penguinPosition->z * cos(angle));
+    GLfloat zTranslate = (penguinPosition->z * cos(angle)) - (penguinPosition->z * sin(angle));
+
+    //printf("xt: %f \t zt: %f\n",xTranslate,zTranslate);
 
     glPushMatrix();
-        glTranslatef(0.0f, 0.0f, 0.0f);
-        glRotatef(angle, 0.0f, 1.0f, 0.0f);
-        glTranslatef(xTranslate, 1.0f, zTranslate);
+        glTranslatef(0.0f, 1.0f, 0.0f);
+        //glRotatef(angle, 0.0f, 1.0f, 0.0f);
+        glTranslatef(penguinPosition->x, penguinPosition->y - 1.5f, penguinPosition->z);
         penguin.Draw(SMOOTH_MATERIAL_TEXTURE);
     glPopMatrix();
 
@@ -961,15 +964,15 @@ void updateEnemies() {
     glPopMatrix();
 
     // clears the old position
-    GLint enemyCollisionX = ((int) enemy->x) + MAP_WIDTH;
-    GLint enemyCollisionZ = ((int) enemy->z) + MAP_LENGTH;
-    collisionMatrix[enemyCollisionX][enemyCollisionZ] = NOTHING;
+    //GLint enemyCollisionX = ((int) enemy->x) + MAP_WIDTH;
+    //GLint enemyCollisionZ = ((int) enemy->z) + MAP_LENGTH;
+    //collisionMatrix[enemyCollisionX][enemyCollisionZ] = NOTHING;
 
     enemyWalk(enemy);
 
     // sets true to the new enemy position in the collision matrix
-    enemyCollisionX = ((int) enemy->x) + MAP_WIDTH;
-    enemyCollisionZ = ((int) enemy->z) + MAP_LENGTH;
+    //enemyCollisionX = ((int) enemy->x) + MAP_WIDTH;
+    //enemyCollisionZ = ((int) enemy->z) + MAP_LENGTH;
     //collisionMatrix[enemyCollisionX][enemyCollisionZ] = ENEMY;
 
 }
@@ -978,11 +981,18 @@ void enemyWalk(Point3d* enemyPosition) {
     GLfloat deltaZ = penguinPosition->z - enemyPosition->z;
     GLfloat distance = sqrt( pow(deltaX, 2) + pow(deltaZ, 2) );
 
+    Point3d* OldEnemyPosition = enemy;
 
     if (distance < 100.0f) {
             enemy->x += (deltaX * ENEMY_SPEED);
+            if(collidesAt(enemy)) {
+                enemy->x -= (deltaX * ENEMY_SPEED);
+            }
+
             enemy->z += (deltaZ * ENEMY_SPEED);
-        //printf("PERTO!\n");
+            if(collidesAt(enemy)) {
+                enemy->z -= (deltaZ * ENEMY_SPEED);
+            }
     }
     //else printf("\n");
 }
