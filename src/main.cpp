@@ -89,6 +89,7 @@ void onMousePassiveMove(int x, int y);
 
 //PENGUIN FUNCTIONS
 void updatePenguinState();
+void throwBlock();
 
 //COLLISION FUNCTIONS
 bool collidesAt(Point3d* coordinate);
@@ -111,6 +112,9 @@ GLuint      texture;         /* Texture object */
 
 //WINDOW GLOBAL
 Window* mainWindow = (Window*) (malloc(sizeof(Window)));
+
+//CAMERA GLOBAL
+bool isThirdPerson = false;
 
 //MOUSE COORDINATES GLOBAL
 Mouse* mouse = (Mouse*) (malloc(sizeof(Mouse)));
@@ -402,12 +406,21 @@ void onKeyDown(unsigned char key, int x, int y) {
             walkingRight = true;
             break;
 
+        case 'q':
+            throwBlock();
+            break;
+
         case RUNNING_KEY:
             isRunning = true;
             break;
 
         case SPACE_KEY:
             isJumping = true;
+            break;
+
+        case 'c':
+            if(isThirdPerson) isThirdPerson = false;
+            else isThirdPerson = true;
             break;
 
         case ESC:
@@ -439,6 +452,10 @@ void onKeyUp(unsigned char key, int x, int y) {
             break;
 
         case SPACE_KEY:
+            ;//do nothing
+            break;
+
+         case 'c':
             ;//do nothing
             break;
 
@@ -776,10 +793,18 @@ void updateCamera() {
     centerPosition->z = penguinPosition->z + cos(mouse->x * M_PI * 1.2f);
 
     //printf("x: %f \t z: %f \n",centerPosition->x, centerPosition->z);
-
-    gluLookAt(penguinPosition->x, penguinPosition->y, penguinPosition->z,
+    if(isThirdPerson) {
+        gluLookAt(penguinPosition->x + (sin(mouse->x * M_PI * 1.2f)) * 4,
+                                        penguinPosition->y + 1.5f,
+                                        penguinPosition->z - (cos(mouse->x * M_PI * 1.2f)) * 4,
               centerPosition->x, centerPosition->y, centerPosition->z,
               upVector->x, upVector->y, upVector->z);
+    }
+    else {
+        gluLookAt(penguinPosition->x, penguinPosition->y, penguinPosition->z,
+              centerPosition->x, centerPosition->y, centerPosition->z,
+              upVector->x, upVector->y, upVector->z);
+    }
 }
 
 void updateLight() {
@@ -808,10 +833,18 @@ void setTextureToOpengl()
 }
 
 void renderPenguin() {
+
+    GLfloat angle = -( (asin (sin(mouse->x * M_PI * 1.2f))) * 180/M_PI );
+    GLfloat xTranslate = (penguinPosition->x * cos(angle)) - (penguinPosition->z * sin(angle));
+    GLfloat zTranslate = (penguinPosition->x * sin(angle)) - (penguinPosition->z * cos(angle));
+
     glPushMatrix();
-    glTranslatef(penguinPosition->x, penguinPosition->y - 0.2f, penguinPosition->z);
-    penguin.Draw(SMOOTH_MATERIAL_TEXTURE);
+        glTranslatef(0.0f, 0.0f, 0.0f);
+        glRotatef(angle, 0.0f, 1.0f, 0.0f);
+        glTranslatef(xTranslate, 1.0f, zTranslate);
+        penguin.Draw(SMOOTH_MATERIAL_TEXTURE);
     glPopMatrix();
+
 }
 
 void testDraw() {
@@ -880,6 +913,31 @@ void updatePenguinState(){
 
     if(isJumping) jump();
     collidesAt(penguinPosition);
+}
+
+void throwBlock() {
+    GLfloat deltaX = centerPosition->x - penguinPosition->x;
+    GLfloat deltaZ = centerPosition->z - penguinPosition->z;
+
+    GLint x = MAP_WIDTH - (int) penguinPosition->x;
+    GLint z = MAP_LENGTH - (int) penguinPosition->z;
+
+    //printf("dx: %f \t dz: %f\n", deltaX, deltaZ);
+
+    //penguin is looking to positive Z: front
+    if(deltaZ >= 0.5) {
+    }
+    else
+    //penguin is looking to negative Z: behind
+    if(deltaZ <= -0.5) {
+    }
+    else
+    //penguin is looking to positive X: left
+    if(deltaX >= 0.5) {
+    }
+    else
+    ////penguin is looking to negative X: right
+    if(deltaX <= -0.5) ;
 }
 
 
