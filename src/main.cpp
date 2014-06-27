@@ -858,7 +858,7 @@ void renderPenguin() {
     glPushMatrix();
         glTranslatef(0.0f, 1.0f, 0.0f);
         glTranslatef(penguinPosition->x, penguinPosition->y - 1.5f, penguinPosition->z);
-        glRotatef(angle * 180, 0.0f, 1.0f, 0.0f);
+        glRotatef(angle * 210, 0.0f, 1.0f, 0.0f);
         penguin.Draw(SMOOTH_MATERIAL_TEXTURE);
     glPopMatrix();
 
