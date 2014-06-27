@@ -136,8 +136,8 @@ bool walkingLeft = false;
 bool walkingRight = false;
 bool isRunning = false;
 bool isJumping = false;
-const float WALK_SPEED = 0.3f; //range must be > 0
-const float RUNNING_SPEED = 0.5f; //range must be > 0
+const float WALK_SPEED = 0.2f; //range must be > 0
+const float RUNNING_SPEED = 0.3f; //range must be > 0
 const float ENEMY_SPEED = 0.02; // range must be > 0
 const float JUMP_SPEED = 0.04f; //range must be > 0
 GLfloat jump_period = 0.0f;
@@ -463,10 +463,10 @@ void walkForward() {
     penguinPosition->z = penguinPosition->z + (deltaZ * movementSpeed);
 
 
-    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH) {
+    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH || collidesAt(penguinPosition)) {
         penguinPosition->x = oldPositionX;
     }
-    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH) {
+    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH || collidesAt(penguinPosition)) {
         penguinPosition->z = oldPositionZ;
     }
 }
@@ -484,10 +484,10 @@ void walkBackward() {
     penguinPosition->x = penguinPosition->x - (deltaX * movementSpeed);
     penguinPosition->z = penguinPosition->z - (deltaZ * movementSpeed);
 
-    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH) {
+    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH || collidesAt(penguinPosition)) {
         penguinPosition->x = oldPositionX;
     }
-    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH) {
+    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH || collidesAt(penguinPosition)) {
         penguinPosition->z = oldPositionZ;
     }
 }
@@ -505,10 +505,10 @@ void walkLeft() {
     penguinPosition->x = penguinPosition->x + (deltaZ * movementSpeed);
     penguinPosition->z = penguinPosition->z - (deltaX * movementSpeed);
 
-    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH) {
+    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH || collidesAt(penguinPosition)) {
         penguinPosition->x = oldPositionX;
     }
-    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH) {
+    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH || collidesAt(penguinPosition)) {
         penguinPosition->z = oldPositionZ;
     }
 }
@@ -526,10 +526,10 @@ void walkRight() {
     penguinPosition->x = penguinPosition->x - (deltaZ * movementSpeed);
     penguinPosition->z = penguinPosition->z + (deltaX * movementSpeed);
 
-    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH) {
+    if(penguinPosition->x < -MAP_WIDTH || penguinPosition->x > MAP_WIDTH || collidesAt(penguinPosition)) {
         penguinPosition->x = oldPositionX;
     }
-    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH) {
+    if(penguinPosition->z < -MAP_LENGTH || penguinPosition->z > MAP_LENGTH || collidesAt(penguinPosition)) {
         penguinPosition->z = oldPositionZ;
     }
 }
@@ -674,7 +674,7 @@ void renderFromBMP() {
                 glEnable(GL_COLOR_MATERIAL);
                 break;
             case SOLID_BLOCK:
-                glScalef(1.0f, 2.0f, 1.0f);
+                glScalef(1.0f, 4.0f, 1.0f);
                 glColor4f(0.6f, 0.6f, 1.0f, 1.0f);
                 glutSolidCube(1.0f);
                 glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
@@ -879,6 +879,7 @@ void updatePenguinState(){
     else if(walkingRight) walkRight();
 
     if(isJumping) jump();
+    collidesAt(penguinPosition);
 }
 
 
@@ -886,17 +887,19 @@ bool collidesAt(Point3d* coordinate) {
     GLint x = MAP_WIDTH - (int) coordinate->x;
     GLint z = MAP_LENGTH - (int) coordinate->z;
 
-    bool isColliding = collisionMatrix[x][z];
+    OBJ_ENUM isColliding = collisionMatrix[x][z];
 
-    //printf("x:%i \t z: %i\n", (int)cameraPosition->x, (int)cameraPosition->z);
-    //printf("x: %i \t z: %i hit: %i\n\n",xAtCollisionMatrix, zAtCollisionMatrix, isColliding);
+    if(isColliding == SOLID_BLOCK || isColliding == THROWABLE_BLOCK){
+            return true;
+    }
+    else return false;
 
 }
 
 void updateEnemies() {
     glPushMatrix();
         glTranslatef(enemy->x, enemy->y, enemy->z);
-        enemyObject.Draw(2);
+        enemyObject.Draw(SMOOTH_MATERIAL_TEXTURE);
     glPopMatrix();
 
     // clears the old position
