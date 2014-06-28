@@ -847,18 +847,18 @@ void setTextureToOpengl()
 }
 
 void renderPenguin() {
+    GLfloat angle = -(mouse->x);
+   // GLfloat angle = -( (asin (sin(mouse->x * M_PI * 1.2f))) * 180/M_PI );
 
-    GLfloat angle = -( (asin (sin(mouse->x * M_PI * 1.2f))) * 180/M_PI );
-    //printf("Angle: %f\n", angle);
-    GLfloat xTranslate = (penguinPosition->x * cos(angle)) - (penguinPosition->z * sin(angle));
+   /* GLfloat xTranslate = (penguinPosition->x * cos(angle)) - (penguinPosition->z * sin(angle));
     GLfloat zTranslate = (penguinPosition->z * cos(angle)) - (penguinPosition->z * sin(angle));
-
+    */
     //printf("xt: %f \t zt: %f\n",xTranslate,zTranslate);
-
+    printf("%.2f\n", mouse->x);
     glPushMatrix();
         glTranslatef(0.0f, 1.0f, 0.0f);
-        //glRotatef(angle, 0.0f, 1.0f, 0.0f);
         glTranslatef(penguinPosition->x, penguinPosition->y - 1.5f, penguinPosition->z);
+        glRotatef(angle * 210, 0.0f, 1.0f, 0.0f);
         penguin.Draw(SMOOTH_MATERIAL_TEXTURE);
     glPopMatrix();
 
@@ -950,16 +950,15 @@ void throwBlock() {
     }
     else
     //penguin is looking to negative Z: behind
-    if(deltaZ <= -0.5 && collisionMatrix[x][z+1] == THROWABLE_BLOCK) {
+    if(deltaZ <= -0.5 && collisionMatrix[x][z+1]) {
     }
     else
     //penguin is looking to positive X: left
-    if(deltaX >= 0.5 && collisionMatrix[x-1][z] == THROWABLE_BLOCK) {
-        printf("LEFT\n");
+    if(deltaX >= 0.5 && collisionMatrix[x-1][z]) {
     }
     else
     ////penguin is looking to negative X: right
-    if(deltaX <= -0.5 && collisionMatrix[x+1][z-1] == THROWABLE_BLOCK) ;
+    if(deltaX <= -0.5 && collisionMatrix[x-1][z]) ;
 }
 
 
