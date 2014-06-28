@@ -80,6 +80,7 @@ void renderScene(bool updateCam);
 void renderMiniMap();
 void renderFloor();
 void renderFromSceneMatrix();
+void renderFromCollisionMatrix();
 void renderSkyBox();
 void updateCamera();
 void updateLight();
@@ -608,9 +609,8 @@ void renderScene(bool isMiniMap) {
 
     setTextureToOpengl();
     renderFloor();
-    renderFromSceneMatrix();
     //renderSkyBox();
-
+    renderFromSceneMatrix();
     //testDraw();
     updateEnemies();
     updatePenguinState();
@@ -825,7 +825,7 @@ void updateLight() {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glTranslatef(0.0f, 25.0f, 0.0f);
-	GLfloat light0_position[] = {0.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat light0_position[] = {0.0f, 0.0f, 0.0f, 1.0f};
 	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
     glPopMatrix();
 }
@@ -939,7 +939,7 @@ void throwBlock() {
     GLint x = MAP_WIDTH - (int) penguinPosition->x;
     GLint z = MAP_LENGTH - (int) penguinPosition->z;
 
-    //printf("dx: %f \t dz: %f\n", deltaX, deltaZ);
+    printf("Collision\t object: %i\n", collisionMatrix[x][z-1]);
 
     if(isBlockMoving) {
 
@@ -947,14 +947,6 @@ void throwBlock() {
 
     //penguin is looking to positive Z: front
     if(deltaZ >= 0.5 && collisionMatrix[x][z-1] == THROWABLE_BLOCK) {
-            GLint oldZ = z - 1;
-            GLint newZ = oldZ - 1;
-
-            collisionMatrix[x][oldZ] = NOTHING;
-            collisionMatrix[x][newZ] = THROWABLE_BLOCK;
-
-            printf("sM Old %i \t", sceneMatrix[x * sceneWidth + oldZ]);
-            printf("sM New %i\n", sceneMatrix[x * sceneWidth + newZ] = THROWABLE_BLOCK);
     }
     else
     //penguin is looking to negative Z: behind

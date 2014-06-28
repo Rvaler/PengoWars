@@ -45,13 +45,6 @@
 			<Add library="gdi32" />
 			<Add directory="C:/Users/Lenz/Desktop/Pengo Wars/files needed/lib" />
 		</Linker>
-		<Unit filename="../files needed/include/al/EFX-Util.h" />
-		<Unit filename="../files needed/include/al/al.h" />
-		<Unit filename="../files needed/include/al/alc.h" />
-		<Unit filename="../files needed/include/al/alut.h" />
-		<Unit filename="../files needed/include/al/efx-creative.h" />
-		<Unit filename="../files needed/include/al/efx.h" />
-		<Unit filename="../files needed/include/al/xram.h" />
 		<Unit filename="extras/3DObject.cpp" />
 		<Unit filename="extras/Texture.cpp" />
 		<Unit filename="extras/bitmap.c">
