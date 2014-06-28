@@ -854,9 +854,9 @@ void renderPenguin() {
     GLfloat zTranslate = (penguinPosition->z * cos(angle)) - (penguinPosition->z * sin(angle));
     */
     //printf("xt: %f \t zt: %f\n",xTranslate,zTranslate);
-    printf("%.2f\n", mouse->x);
+    //printf("%.2f\n", mouse->x);
     glPushMatrix();
-        glTranslatef(0.0f, 1.0f, 0.0f);
+        glTranslatef(0.0f, 0.9f, 0.0f);
         glTranslatef(penguinPosition->x, penguinPosition->y - 1.5f, penguinPosition->z);
         glRotatef(angle * 210, 0.0f, 1.0f, 0.0f);
         penguin.Draw(SMOOTH_MATERIAL_TEXTURE);
